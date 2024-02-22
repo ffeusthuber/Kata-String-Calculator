@@ -33,4 +33,14 @@ public class StringCalculatorTest {
         assertThat(result).isEqualTo(10);
     }
 
+
+    @Test
+    void newLinesInsteadOfCommasInTheInputStringReturnsCorrectResult() {
+        StringCalculator stringCalculator = new StringCalculator();
+
+        int result = stringCalculator.add("1,2\n5,2");
+
+        assertThat(result).isEqualTo(10);
+    }
+
 }

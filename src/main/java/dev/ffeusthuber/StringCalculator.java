@@ -1,11 +1,11 @@
 package dev.ffeusthuber;
 
 public class StringCalculator {
-    public int add(String calculationString) {
+    public int add(String calculationInput) {
         int result = 0;
-        if(calculationString.isEmpty())return result;
+        if(calculationInput.isEmpty())return result;
 
-        String[] numbers = calculationString.split(",");
+        String[] numbers = calculationInput.split("[,\\n]");
         for (String number : numbers) {
             int parsedNumber = Integer.parseInt(number);
             result += parsedNumber;
