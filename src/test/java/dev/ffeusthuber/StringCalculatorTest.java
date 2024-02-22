@@ -25,11 +25,12 @@ public class StringCalculatorTest {
     }
 
     @Test
-    void addingTwoNumbersReturnsSum() {
+    void addingMultipleNumbersReturnsSum() {
         StringCalculator stringCalculator = new StringCalculator();
 
-        int result = stringCalculator.add("1,2");
+        int result = stringCalculator.add("1,2,5,2");
 
-        assertThat(result).isEqualTo(3);
+        assertThat(result).isEqualTo(10);
     }
+
 }
