@@ -7,7 +7,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class StringCalculatorTest {
 
     @Test
-    void addingEmptyStringShouldReturn0() {
+    void addingEmptyStringReturns0() {
         StringCalculator stringCalculator = new StringCalculator();
 
         int result = stringCalculator.add("");
@@ -16,11 +16,20 @@ public class StringCalculatorTest {
     }
 
     @Test
-    void addingSingleNumberShouldReturnCorrectInteger() {
+    void addingSingleNumberReturnsCorrectInteger() {
         StringCalculator stringCalculator = new StringCalculator();
 
         int result = stringCalculator.add("1");
 
         assertThat(result).isEqualTo(1);
+    }
+
+    @Test
+    void addingTwoNumbersReturnsSum() {
+        StringCalculator stringCalculator = new StringCalculator();
+
+        int result = stringCalculator.add("1,2");
+
+        assertThat(result).isEqualTo(3);
     }
 }
