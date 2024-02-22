@@ -14,4 +14,13 @@ public class StringCalculatorTest {
 
         assertThat(result).isEqualTo(0);
     }
+
+    @Test
+    void addingSingleNumberShouldReturnCorrectInteger() {
+        StringCalculator stringCalculator = new StringCalculator();
+
+        int result = stringCalculator.add("1");
+
+        assertThat(result).isEqualTo(1);
+    }
 }
