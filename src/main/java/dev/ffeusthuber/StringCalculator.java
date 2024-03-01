@@ -1,9 +1,22 @@
 package dev.ffeusthuber;
 
+import java.util.Arrays;
+
 public class StringCalculator {
     public int add(String calculationInput) {
         if(calculationInput.isEmpty())return 0;
 
+        int[] numbers = extractNumbers(calculationInput);
+
+        int result = 0;
+        for (int number : numbers) {
+            result += number;
+        }
+
+        return result;
+    }
+
+    private int[] extractNumbers(String calculationInput) {
         boolean hasCustomDelimiter = calculationInput.startsWith("//");
         String delimiter = hasCustomDelimiter ? getDelimiter(calculationInput) : ",";
 
@@ -13,14 +26,9 @@ public class StringCalculator {
 
         String[] numbers = calculationInput.split("[" + delimiter + "\\n]");
 
-        int result = 0;
-
-        for (String number : numbers) {
-            int parsedNumber = Integer.parseInt(number);
-            result += parsedNumber;
-        }
-
-        return result;
+        return Arrays.stream(numbers)
+                                    .mapToInt(Integer::parseInt)
+                                    .toArray();
     }
 
     private String removeFirstLine(String calculationInput) {
