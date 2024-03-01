@@ -1,6 +1,9 @@
 package dev.ffeusthuber;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class StringCalculator {
     public int add(String calculationInput) {
@@ -9,8 +12,21 @@ public class StringCalculator {
         int[] numbers = extractNumbers(calculationInput);
 
         int result = 0;
+        List<Integer> negativeNumbers = new ArrayList<>();
+
         for (int number : numbers) {
+            if(number < 0) {
+                negativeNumbers.add(number);
+            }
             result += number;
+        }
+
+
+        if(!negativeNumbers.isEmpty()) {
+            String exceptionMessage = "negatives not allowed: " + negativeNumbers.stream()
+                                                                                .map(Object::toString)
+                                                                                .collect(Collectors.joining(","));
+            throw new IllegalArgumentException(exceptionMessage);
         }
 
         return result;

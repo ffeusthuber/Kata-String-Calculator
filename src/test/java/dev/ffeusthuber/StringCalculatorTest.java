@@ -3,6 +3,7 @@ package dev.ffeusthuber;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class StringCalculatorTest {
 
@@ -50,6 +51,14 @@ public class StringCalculatorTest {
         int result = stringCalculator.add("//;\n1;2");
 
         assertThat(result).isEqualTo(3);
+    }
+
+    @Test
+    void inputWithNegativeNumbersThrowsException() {
+        StringCalculator stringCalculator = new StringCalculator();
+
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> stringCalculator.add("1,2,-3,-4"));
+        assertThat(exception.getMessage()).isEqualTo("negatives not allowed: -3,-4");
     }
 
 }
