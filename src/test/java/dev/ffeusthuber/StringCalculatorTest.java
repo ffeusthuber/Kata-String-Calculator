@@ -43,4 +43,13 @@ public class StringCalculatorTest {
         assertThat(result).isEqualTo(10);
     }
 
+    @Test
+    void inputWithCustomDelimiterGetsCalculatedCorrectly() {
+        StringCalculator stringCalculator = new StringCalculator();
+
+        int result = stringCalculator.add("//;\n1;2");
+
+        assertThat(result).isEqualTo(3);
+    }
+
 }
