@@ -34,7 +34,6 @@ public class StringCalculatorTest {
         assertThat(result).isEqualTo(10);
     }
 
-
     @Test
     void newLinesInsteadOfCommasInTheInputStringReturnsCorrectResult() {
         StringCalculator stringCalculator = new StringCalculator();
@@ -59,6 +58,15 @@ public class StringCalculatorTest {
 
         Exception exception = assertThrows(IllegalArgumentException.class, () -> stringCalculator.add("1,2,-3,-4"));
         assertThat(exception.getMessage()).isEqualTo("negatives not allowed: -3,-4");
+    }
+
+    @Test
+    void numbersGreaterThanThousandGetIgnoredInInput() {
+        StringCalculator stringCalculator = new StringCalculator();
+
+        int result = stringCalculator.add("1,2,1001,1000");
+
+        assertThat(result).isEqualTo(1003);
     }
 
 }
