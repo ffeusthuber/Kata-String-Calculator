@@ -69,4 +69,13 @@ public class StringCalculatorTest {
         assertThat(result).isEqualTo(1003);
     }
 
+    @Test
+    void inputWithDelimiterWithALengthGreaterThanOneGetsCalculatedCorrectly() {
+        StringCalculator stringCalculator = new StringCalculator();
+
+        int result = stringCalculator.add("//[***]\n1***2***3");
+
+        assertThat(result).isEqualTo(6);
+    }
+
 }

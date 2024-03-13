@@ -1,5 +1,7 @@
 package dev.ffeusthuber;
 
+import java.util.Arrays;
+
 public class StringCalculator {
 
     private final InputProcessor inputProcessor;
@@ -9,13 +11,10 @@ public class StringCalculator {
     }
 
     public int add(String calculationInput) {
-        int result = 0;
-        if(calculationInput.isEmpty())return result;
+        if(calculationInput.isEmpty())return 0;
 
         int[] numbers = inputProcessor.extractNumbers(calculationInput);
-        for (int number : numbers) {
-            result += number;
-        }
-        return result;
+
+        return Arrays.stream(numbers).sum();
     }
 }
