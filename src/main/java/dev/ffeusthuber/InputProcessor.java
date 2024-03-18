@@ -1,6 +1,8 @@
 package dev.ffeusthuber;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -12,7 +14,6 @@ public class InputProcessor {
         return sanitize(parsedNumbers);
     }
 
-
     private int[] parse(String calculationInput) {
         String[] numbers = tokenizeInput(calculationInput);
         return Arrays.stream(numbers)
@@ -21,12 +22,28 @@ public class InputProcessor {
     }
 
     private String[] tokenizeInput(String calculationInput) {
-        boolean hasCustomDelimiter = calculationInput.startsWith("//");
-        String delimiter = hasCustomDelimiter ? extractDelimiter(calculationInput) : ",";
-        if(hasCustomDelimiter) calculationInput = removeFirstLine(calculationInput);
+        List<String> delimiters = getDelimiters(calculationInput);
+        if(calculationInput.startsWith("//")) calculationInput = removeFirstLine(calculationInput);
 
-        return calculationInput.split(  Pattern.quote(delimiter) + "|\\n");
+        delimiters.replaceAll(Pattern::quote);
+
+        return  calculationInput.split(
+                String.join("|", delimiters));
     }
+
+    private List<String> getDelimiters(String calculationInput) {
+        List<String> delimiters = new ArrayList<>();
+        delimiters.add("\n");
+        boolean hasCustomDelimiter = calculationInput.startsWith("//");
+
+        if(hasCustomDelimiter){
+            delimiters.addAll(extractDelimiters(calculationInput));
+        } else{
+            delimiters.add(",");
+        }
+        return delimiters;
+    }
+
     private void validate(int[] numbers) {
         checkForNegatives(numbers);
     }
@@ -52,23 +69,30 @@ public class InputProcessor {
                 .toArray();
     }
 
-
     private String removeFirstLine(String calculationInput) {
         calculationInput = calculationInput.substring(calculationInput.indexOf("\n")+1);
         return calculationInput;
     }
 
-    private String extractDelimiter(String calculationInput) {
-        String delimiter =  calculationInput.split("\\n")[0]
+    private List <String> extractDelimiters(String calculationInput) {
+        String delimiterPart =  calculationInput.split("\\n")[0]
                 .substring(2);
 
-        if(delimiter.startsWith("[")){
-            int delimiterStart = 1;
-            int delimiterEnd = delimiter.indexOf("]");
-            delimiter = delimiter.substring(delimiterStart,delimiterEnd);
+        List<String> delimiters = new ArrayList<>();
+
+        if(delimiterPart.startsWith("[")){
+            while (!delimiterPart.isEmpty()){
+                System.out.println(delimiterPart);
+                int delimiterStart = 1;
+                int delimiterEnd = delimiterPart.indexOf("]");
+                String delimiter = delimiterPart.substring(delimiterStart,delimiterEnd);
+                delimiters.add(delimiter);
+                delimiterPart = delimiterPart.substring(delimiterEnd + 1);
+            }
+        }else {
+            delimiters.add(delimiterPart);
         }
 
-        System.out.println(delimiter);
-        return delimiter;
+        return delimiters;
     }
 }
