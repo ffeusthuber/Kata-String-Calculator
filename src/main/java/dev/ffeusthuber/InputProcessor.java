@@ -5,13 +5,14 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class InputProcessor {
 
-    public int[] extractNumbers(String calculationInput) {
+    public IntStream extractNumbers(String calculationInput) {
         int[] parsedNumbers = parse(calculationInput);
         validate(parsedNumbers);
-        return sanitize(parsedNumbers);
+        return Arrays.stream(sanitize(parsedNumbers));
     }
 
     private int[] parse(String calculationInput) {
@@ -34,13 +35,14 @@ public class InputProcessor {
     private List<String> getDelimiters(String calculationInput) {
         List<String> delimiters = new ArrayList<>();
         delimiters.add("\n");
-        boolean hasCustomDelimiter = calculationInput.startsWith("//");
 
+        boolean hasCustomDelimiter = calculationInput.startsWith("//");
         if(hasCustomDelimiter){
             delimiters.addAll(extractDelimiters(calculationInput));
         } else{
             delimiters.add(",");
         }
+
         return delimiters;
     }
 
@@ -82,7 +84,6 @@ public class InputProcessor {
 
         if(delimiterPart.startsWith("[")){
             while (!delimiterPart.isEmpty()){
-                System.out.println(delimiterPart);
                 int delimiterStart = 1;
                 int delimiterEnd = delimiterPart.indexOf("]");
                 String delimiter = delimiterPart.substring(delimiterStart,delimiterEnd);
